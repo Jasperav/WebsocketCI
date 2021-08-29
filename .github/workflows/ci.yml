@@ -16,7 +16,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build
-      run: cargo build --verbose
-    - name: Run tests
-      run: cargo test --verbose
+    - name: Build server
+      run: |
+        cd server
+        cargo build --verbose
+    - name: Run server in background
+      run: |
+        cd server
+        cargo run &
+    - name: Run swift test
+      run: |
+        cd client
+        xcodebuild test -project client.xcodeproj -scheme clientTests -destination 'platform=iOS Simulator,name=iPhone 8,OS=14.4'
