@@ -14,6 +14,8 @@ class clientTests: XCTestCase {
         webSocketTask.send(.string("hi"), completionHandler: { error in
             XCTAssertNil(error)
             
+            print("TEST: \(error)")
+            
             expectationSend.fulfill()
         })
         
@@ -29,6 +31,8 @@ class clientTests: XCTestCase {
                     fatalError()
                 case .string(let response):
                     XCTAssertEqual("hi", response)
+                    
+                    print("TEST2: \(response)")
                     
                     expectationReceive.fulfill()
                 @unknown default:
