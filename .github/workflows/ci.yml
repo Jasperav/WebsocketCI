@@ -23,8 +23,12 @@ jobs:
     - name: Run server in background
       run: |
         cd server
-        cargo run &
+        cargo run > ~/server_output 2>&1 &
     - name: Run swift test
       run: |
         cd client
         xcodebuild test -project client.xcodeproj -scheme clientTests -destination 'platform=iOS Simulator,name=iPhone 8,OS=14.4'
+    - name: Run swift test
+      if: ${{ always() }}
+      run: |
+        cat ~/server_output
